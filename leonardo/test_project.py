@@ -1,76 +1,48 @@
 import pytest
-from project import (
-    choose_category,
-    generate_invention,
-    calculate_score,
-    build_report,
-    format_report,
-)
+from project import validate_category, generate_invention, format_invention
 
 
-def test_choose_category_valid():
-    assert choose_category("flight") == "flight"
-    assert choose_category(" WATER ") == "water"
-    assert choose_category("Transport") == "transport"
+def test_validate_category_valid():
+    assert validate_category("flight") is True
+    assert validate_category("water") is True
+    assert validate_category("war") is True
+    assert validate_category("transport") is True
 
 
-def test_choose_category_invalid():
-    with pytest.raises(ValueError):
-        choose_category("music")
+def test_validate_category_invalid():
+    assert validate_category("music") is False
+    assert validate_category("") is False
+    assert validate_category("Flight") is False
 
 
-def test_generate_invention():
-    invention = generate_invention("transport")
-    assert "name" in invention
-    assert "mechanism" in invention
+def test_generate_invention_valid():
+    invention = generate_invention("flight")
+    assert isinstance(invention, dict)
+    assert "title" in invention
+    assert "principle" in invention
     assert "modern_version" in invention
-    assert "modern_mechanism" in invention
-    assert "market_demand" in invention
+    assert "demand" in invention
     assert "roi" in invention
-    assert "difficulty" in invention
 
 
-def test_calculate_score_excellent():
+def test_generate_invention_invalid():
+    with pytest.raises(ValueError):
+        generate_invention("invalid")
+
+
+def test_format_invention():
     invention = {
-        "market_demand": "High",
-        "roi": "High in logistics",
-        "difficulty": "Medium",
-    }
-    assert calculate_score(invention) == "Excellent project potential"
-
-
-def test_build_report():
-    invention = {
-        "name": "Test Machine",
-        "leonardo_description": "A Renaissance concept machine.",
-        "mechanism": "Uses gears and springs.",
-        "modern_version": "Modern robotic system",
-        "modern_mechanism": "Uses motors and sensors.",
-        "market_demand": "Medium",
-        "roi": "Moderate but strategic",
-        "difficulty": "High",
+        "title": "Test Machine",
+        "principle": "Test principle",
+        "modern_version": "Test modern version",
+        "demand": "Test demand",
+        "roi": "Test ROI"
     }
 
-    report = build_report(invention)
+    formatted = format_invention(invention)
 
-    assert report["Generated Invention"] == "Test Machine"
-    assert report["Modern Realization"] == "Modern robotic system"
-    assert report["How the Modern Version Works"] == "Uses motors and sensors."
-
-
-def test_format_report():
-    report = {
-        "Generated Invention": "Test Machine",
-        "Leonardo Concept": "A Renaissance concept machine.",
-        "How It Works": "Uses gears and springs.",
-        "Modern Realization": "Modern robotic system",
-        "How the Modern Version Works": "Uses motors and sensors.",
-        "Market Demand": "Medium",
-        "Return Potential": "Moderate but strategic",
-        "Engineering Difficulty": "High",
-        "Project Evaluation": "Promising with realistic challenges",
-    }
-
-    text = format_report(report)
-    assert "Generated Invention: Test Machine" in text
-    assert "Project Evaluation: Promising with realistic challenges" in text
+    assert "Title: Test Machine" in formatted
+    assert "Principle: Test principle" in formatted
+    assert "Modern Version: Test modern version" in formatted
+    assert "Market Demand: Test demand" in formatted
+    assert "ROI Analysis: Test ROI" in formatted

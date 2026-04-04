@@ -4,257 +4,200 @@ import random
 INVENTIONS = {
     "flight": [
         {
-            "name": "Ornithopter",
-            "leonardo_description": (
-                "A flying machine with large mechanical wings inspired by birds."
+            "title": "Mechanical Flying Machine with Rotating Wings",
+            "principle": (
+                "This invention imitates the motion of bird wings and uses "
+                "rotating wooden mechanisms to create lift and forward movement."
             ),
-            "mechanism": (
-                "The machine uses pedals, gears, and levers to move articulated wings "
-                "up and down, attempting to create lift through repeated flapping motion."
+            "modern_version": (
+                "A lightweight drone with flapping composite wings, onboard sensors, "
+                "and AI-assisted flight stabilization."
             ),
-            "modern_version": "Autonomous reconnaissance drone",
-            "modern_mechanism": (
-                "The modern version replaces muscle power with electric motors and uses "
-                "lightweight propellers, sensors, and control software to generate lift, "
-                "maintain balance, and navigate through the air."
-            ),
-            "market_demand": "High",
-            "roi": "Strong long-term potential",
-            "difficulty": "High",
+            "demand": "High demand in robotics, research, and surveillance.",
+            "roi": "Estimated ROI: 70% within 2-3 years if developed commercially."
         },
         {
-            "name": "Aerial Screw",
-            "leonardo_description": (
-                "A spiral-shaped flying device designed to rise into the air."
+            "title": "Wind-Powered Glider",
+            "principle": (
+                "The machine captures wind energy and uses a curved wing structure "
+                "to maintain stable gliding over long distances."
             ),
-            "mechanism": (
-                "The invention uses a rotating helical surface intended to compress air "
-                "downward. Leonardo imagined that the spiral, when spun quickly enough, "
-                "could lift the structure upward."
+            "modern_version": (
+                "An autonomous glider using carbon fiber materials, GPS, and "
+                "environmental data analysis."
             ),
-            "modern_version": "Vertical takeoff rescue helicopter",
-            "modern_mechanism": (
-                "The modern version uses powered rotor blades to generate lift by forcing "
-                "air downward. Blade pitch, engine power, and stabilization systems allow "
-                "vertical takeoff, hovering, and controlled movement."
-            ),
-            "market_demand": "High",
-            "roi": "High in specialized sectors",
-            "difficulty": "Very High",
-        },
-    ],
-    "war": [
-        {
-            "name": "Armored Vehicle",
-            "leonardo_description": (
-                "A covered combat vehicle protected by a circular armored shell."
-            ),
-            "mechanism": (
-                "The vehicle is driven by internal cranks connected to wheels, while "
-                "sloped outer armor helps deflect enemy attacks. Weapons are placed "
-                "around the perimeter for multi-direction defense."
-            ),
-            "modern_version": "Autonomous armored ground robot",
-            "modern_mechanism": (
-                "The modern version uses electric or hybrid drive systems, reinforced "
-                "armor, onboard cameras, sensors, and software to move across terrain "
-                "and support defense or reconnaissance operations."
-            ),
-            "market_demand": "Medium",
-            "roi": "Moderate but strategic",
-            "difficulty": "High",
+            "demand": "Moderate to high demand in environmental monitoring.",
+            "roi": "Estimated ROI: 55% within 3 years."
         },
         {
-            "name": "Rapid-Fire Crossbow Platform",
-            "leonardo_description": (
-                "A rotating launch platform designed to increase battlefield firing speed."
+            "title": "Ornithopter Inspired by Birds",
+            "principle": (
+                "A wing-flapping mechanism recreates the biomechanics of birds "
+                "to generate lift and directional control."
             ),
-            "mechanism": (
-                "The platform arranges several projectile launch points in sequence, "
-                "allowing one section to be reloaded while another is aimed and fired, "
-                "reducing downtime between shots."
+            "modern_version": (
+                "A bio-inspired aerial robot with servo-controlled wings and "
+                "computer vision navigation."
             ),
-            "modern_version": "Automated modular defense turret",
-            "modern_mechanism": (
-                "The modern version uses motorized targeting, a controlled firing system, "
-                "and computer-assisted aiming to improve speed, precision, and response time."
-            ),
-            "market_demand": "Medium",
-            "roi": "Sector-dependent",
-            "difficulty": "Very High",
-        },
+            "demand": "High demand in experimental aviation and defense technology.",
+            "roi": "Estimated ROI: 80% within 2-4 years."
+        }
     ],
     "water": [
         {
-            "name": "Water Lifting Machine",
-            "leonardo_description": (
-                "A mechanical device created to move water upward for irrigation and labor."
+            "title": "Underwater Breathing Device",
+            "principle": (
+                "The device stores air in a sealed system and distributes it "
+                "through tubes to allow a person to stay underwater longer."
             ),
-            "mechanism": (
-                "The machine uses rotating scoops or screw-like geometry to capture water "
-                "and raise it from a lower level to a higher channel."
+            "modern_version": (
+                "A modern diving apparatus with compressed air tanks, pressure "
+                "regulators, and digital monitoring."
             ),
-            "modern_version": "Smart solar irrigation pump",
-            "modern_mechanism": (
-                "The modern version uses solar energy, an electric pump, and automated "
-                "flow control. Sensors can measure soil moisture and activate pumping "
-                "only when watering is actually needed."
-            ),
-            "market_demand": "High",
-            "roi": "Excellent in agriculture",
-            "difficulty": "Medium",
+            "demand": "High demand in marine exploration and rescue operations.",
+            "roi": "Estimated ROI: 65% within 2 years."
         },
         {
-            "name": "Canal Lock Assistant",
-            "leonardo_description": (
-                "A mechanism meant to improve navigation and water level control in canals."
+            "title": "Mechanical Submarine",
+            "principle": (
+                "A sealed underwater vessel moves using manual propulsion and "
+                "controlled ballast for diving and resurfacing."
             ),
-            "mechanism": (
-                "The design manages water flow through controlled gates and chamber logic, "
-                "allowing vessels to rise or descend between different water levels."
+            "modern_version": (
+                "A compact autonomous underwater vehicle for exploration and inspection."
             ),
-            "modern_version": "Automated canal logistics control system",
-            "modern_mechanism": (
-                "The modern version uses hydraulic gates, digital monitoring, and "
-                "synchronized control software to manage water levels and vessel traffic "
-                "with higher efficiency and safety."
-            ),
-            "market_demand": "Medium",
-            "roi": "Stable infrastructure return",
-            "difficulty": "High",
+            "demand": "High demand in ocean research and industrial inspection.",
+            "roi": "Estimated ROI: 75% within 3 years."
         },
+        {
+            "title": "Water Propulsion System",
+            "principle": (
+                "Rotating blades transfer force into water, producing controlled "
+                "movement for boats or underwater machines."
+            ),
+            "modern_version": (
+                "An electric marine propulsion system with efficient turbines and "
+                "smart control software."
+            ),
+            "demand": "Moderate demand in marine transport and green engineering.",
+            "roi": "Estimated ROI: 50% within 3-4 years."
+        }
+    ],
+    "war": [
+        {
+            "title": "Armored Mechanical Vehicle",
+            "principle": (
+                "A protected mobile structure carries defensive equipment while "
+                "shielding its operators from enemy attacks."
+            ),
+            "modern_version": (
+                "An AI-assisted armored ground vehicle with remote navigation "
+                "and surveillance systems."
+            ),
+            "demand": "High demand in defense and security sectors.",
+            "roi": "Estimated ROI: 85% within 2-3 years."
+        },
+        {
+            "title": "Defensive Rotating Shield",
+            "principle": (
+                "A rotating shield mechanism disperses impact and provides a moving "
+                "protective barrier."
+            ),
+            "modern_version": (
+                "A portable ballistic defense system using lightweight alloys and "
+                "stabilized deployment."
+            ),
+            "demand": "Moderate demand in tactical defense applications.",
+            "roi": "Estimated ROI: 45% within 3 years."
+        },
+        {
+            "title": "Mechanical Crossbow System",
+            "principle": (
+                "A tension-based firing mechanism stores energy and releases it "
+                "with improved precision and force."
+            ),
+            "modern_version": (
+                "A robotic launching system with targeting software and "
+                "electromechanical control."
+            ),
+            "demand": "Moderate demand in defense research and simulation systems.",
+            "roi": "Estimated ROI: 40% within 3-4 years."
+        }
     ],
     "transport": [
         {
-            "name": "Self-Propelled Cart",
-            "leonardo_description": (
-                "A cart capable of moving without being pushed by a person or animal."
+            "title": "Self-Propelled Cart",
+            "principle": (
+                "A gear-driven cart stores mechanical energy and releases it "
+                "to move without animal power."
             ),
-            "mechanism": (
-                "The cart stores mechanical energy in wound springs and releases it "
-                "through gears, allowing the wheels to move forward in a controlled way."
+            "modern_version": (
+                "An autonomous delivery vehicle powered by batteries and guided by AI."
             ),
-            "modern_version": "Autonomous delivery robot",
-            "modern_mechanism": (
-                "The modern version uses batteries, electric motors, wheel control systems, "
-                "and route-planning software to move goods independently through indoor "
-                "or urban environments."
-            ),
-            "market_demand": "High",
-            "roi": "High in logistics",
-            "difficulty": "Medium",
+            "demand": "High demand in logistics and smart city infrastructure.",
+            "roi": "Estimated ROI: 90% within 2 years."
         },
         {
-            "name": "Portable Military Bridge",
-            "leonardo_description": (
-                "A quickly deployable bridge for crossing rivers and battlefield gaps."
+            "title": "Mechanical Bridge System",
+            "principle": (
+                "A movable bridge uses hinges and leverage to deploy quickly "
+                "across difficult terrain."
             ),
-            "mechanism": (
-                "The structure uses folding sections, pivot joints, and balanced supports "
-                "to allow fast transport and quick unfolding across obstacles."
+            "modern_version": (
+                "A rapid-deployment smart bridge for emergency and military engineering."
             ),
-            "modern_version": "Rapid emergency bridge deployment system",
-            "modern_mechanism": (
-                "The modern version uses lightweight composite materials, hydraulic "
-                "unfolding systems, and locking mechanisms to create a safe temporary "
-                "bridge within minutes."
-            ),
-            "market_demand": "High",
-            "roi": "Strong in emergency engineering",
-            "difficulty": "High",
+            "demand": "Moderate demand in civil engineering and disaster response.",
+            "roi": "Estimated ROI: 60% within 3 years."
         },
-    ],
+        {
+            "title": "Rotating Wheel Transport Machine",
+            "principle": (
+                "The machine combines rotational motion and balanced structure "
+                "to improve movement efficiency over land."
+            ),
+            "modern_version": (
+                "A compact electric transport platform with intelligent motion control."
+            ),
+            "demand": "High demand in urban mobility and industrial transport.",
+            "roi": "Estimated ROI: 70% within 2-3 years."
+        }
+    ]
 }
 
 
 def main():
-    print("Leonardo AI")
-    print("Renaissance invention generator with modern engineering analysis.")
-    print()
+    print("Leonardo AI - Renaissance Invention Generator")
+    category = input("Choose category (flight, water, war, transport): ").strip().lower()
 
-    try:
-        category = choose_category(
-            input("Choose category (flight, war, water, transport): ")
-        )
-    except ValueError:
-        print("Invalid category")
+    if not validate_category(category):
+        print("Invalid category.")
         return
 
     invention = generate_invention(category)
-    report = build_report(invention)
-    print(report)
+    result = format_invention(invention)
+
+    print("\nGenerated Invention:\n")
+    print(result)
 
 
-def choose_category(user_input):
-    category = user_input.strip().lower()
-    if category not in INVENTIONS:
-        raise ValueError("Invalid category")
-    return category
+def validate_category(category):
+    return category in INVENTIONS
 
 
 def generate_invention(category):
+    if not validate_category(category):
+        raise ValueError("Invalid category")
+
     return random.choice(INVENTIONS[category])
 
 
-def calculate_score(invention):
-    demand_scores = {"Low": 1, "Medium": 2, "High": 3}
-    roi_scores = {
-        "Limited": 1,
-        "Sector-dependent": 2,
-        "Stable infrastructure return": 2,
-        "Moderate but strategic": 2,
-        "Strong long-term potential": 3,
-        "High in specialized sectors": 3,
-        "Excellent in agriculture": 3,
-        "High in logistics": 3,
-        "Strong in emergency engineering": 3,
-    }
-    difficulty_scores = {"Medium": 1, "High": 2, "Very High": 3}
-
-    demand = demand_scores[invention["market_demand"]]
-    roi = roi_scores[invention["roi"]]
-    difficulty = difficulty_scores[invention["difficulty"]]
-
-    total = demand + roi - difficulty
-
-    if total >= 4:
-        return "Excellent project potential"
-    if total >= 2:
-        return "Promising with realistic challenges"
-    return "Ambitious but difficult to scale"
-
-
-def build_report(invention):
-    score = calculate_score(invention)
-
-    return {
-        "Generated Invention": invention["name"],
-        "Leonardo Concept": invention["leonardo_description"],
-        "How It Works": invention["mechanism"],
-        "Modern Realization": invention["modern_version"],
-        "How the Modern Version Works": invention["modern_mechanism"],
-        "Market Demand": invention["market_demand"],
-        "Return Potential": invention["roi"],
-        "Engineering Difficulty": invention["difficulty"],
-        "Project Evaluation": score,
-    }
-
-
-def format_report(report):
+def format_invention(invention):
     return (
-        f"\nGenerated Invention: {report['Generated Invention']}\n"
-        f"\nLeonardo Concept:\n"
-        f"{report['Leonardo Concept']}\n"
-        f"\nHow It Works:\n"
-        f"{report['How It Works']}\n"
-        f"\nModern Realization:\n"
-        f"{report['Modern Realization']}\n"
-        f"\nHow the Modern Version Works:\n"
-        f"{report['How the Modern Version Works']}\n"
-        f"\nMarket Demand: {report['Market Demand']}\n"
-        f"Return Potential: {report['Return Potential']}\n"
-        f"Engineering Difficulty: {report['Engineering Difficulty']}\n"
-        f"\nProject Evaluation: {report['Project Evaluation']}\n"
+        f"Title: {invention['title']}\n"
+        f"Principle: {invention['principle']}\n"
+        f"Modern Version: {invention['modern_version']}\n"
+        f"Market Demand: {invention['demand']}\n"
+        f"ROI Analysis: {invention['roi']}"
     )
 
 

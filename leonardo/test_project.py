@@ -3,10 +3,20 @@ from project import validate_category, generate_invention, format_invention
 
 
 def test_validate_category_valid():
-    assert validate_category("flight") is True
-    assert validate_category("water") is True
-    assert validate_category("war") is True
-    assert validate_category("transport") is True
+    valid_categories = [
+        "flight",
+        "water",
+        "war",
+        "transport",
+        "energy",
+        "medicine",
+        "architecture",
+        "agriculture",
+        "robotics",
+        "space"
+    ]
+    for category in valid_categories:
+        assert validate_category(category) is True
 
 
 def test_validate_category_invalid():

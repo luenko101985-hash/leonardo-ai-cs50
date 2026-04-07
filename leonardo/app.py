@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 
-from project import validate_category, generate_invention
 from ai_generator import generate_leonardo_concept
 
 
@@ -228,14 +227,6 @@ def generate_investor_summary(title, category, demand, roi):
 
 
 def build_fallback_concept(category, prompt_text, creativity_mode, audience):
-    if validate_category(category):
-        invention = generate_invention(category)
-        title = invention["title"]
-        principle = invention["principle"]
-        modern_version = invention["modern_version"]
-        demand = invention["demand"]
-        roi = invention["roi"]
-    else:
         title = f"Leonardo Concept for {category.title()}: {prompt_text[:60]}"
         principle = (
             f"This invention applies Renaissance engineering logic to {category}. "
@@ -255,42 +246,42 @@ def build_fallback_concept(category, prompt_text, creativity_mode, audience):
             "market fit, and production cost."
         )
 
-    difficulty = generate_difficulty(category, creativity_mode)
-    modern_difficulty = generate_modern_difficulty(category)
-    materials = generate_materials(category)
-    use_cases = generate_use_cases(category)
-    dev_time = generate_dev_time(modern_difficulty)
-    investor_summary = generate_investor_summary(title, category, demand, roi)
+        difficulty = generate_difficulty(category, creativity_mode)
+        modern_difficulty = generate_modern_difficulty(category)
+        materials = generate_materials(category)
+        use_cases = generate_use_cases(category)
+        dev_time = generate_dev_time(modern_difficulty)
+        investor_summary = generate_investor_summary(title, category, demand, roi)
 
-    leonardo_sketch_description = (
+        leonardo_sketch_description = (
         f"A sepia-toned Renaissance sketch of '{title}', drawn with fine ink lines, "
         f"mechanical annotations, visible gears, cross-sections, and Leonardo-style notes "
         f"around the concept."
     )
 
-    modern_sketch_description = (
+        modern_sketch_description = (
         f"A clean modern engineering blueprint of '{title}', showing labeled modules, "
         f"modern materials, digital control systems, structural framing, safety architecture, "
         f"and a presentation-ready technical layout."
     )
 
-    image_concept = (
+        image_concept = (
         "Image generation concept enabled: the system can later produce Leonardo-style visual ideas "
         "and modern concept art for the invention."
     )
 
-    blueprint_concept = (
+        blueprint_concept = (
         "Blueprint concept enabled: the system can later output technical sketch descriptions "
         "for engineering slides and presentation visuals."
     )
 
-    voice_assistant_concept = (
+        voice_assistant_concept = (
         f"The voice assistant could explain how '{title}' works, guide the user through "
         f"its modern implementation, answer questions about demand and ROI, and present "
         f"the concept step by step."
     )
 
-    return {
+        return {
         "title": title,
         "principle": principle,
         "leonardo_sketch_description": leonardo_sketch_description,

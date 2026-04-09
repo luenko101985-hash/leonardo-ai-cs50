@@ -1,9 +1,7 @@
 import os
 import streamlit as st
 
-from database import init_db, save_concept, get_concepts
-from database import init_db, save_concept
-from database import init_db
+from database import init_db, save_concept, get_concepts, get_concept_by_id, delete_concept
 from services.concept_service import generate_concept
 from config import CATEGORIES, DIFFICULTY, MATERIALS, USE_CASES
 from utils import generate_dev_time, generate_investor_summary
@@ -262,19 +260,23 @@ with right:
     if should_generate:
         prompt_text = user_prompt.strip() if user_prompt.strip() else f"Create an invention in {category}"
 
-    with st.spinner("Generating concept..."):
-        concept_data = generate_concept(
-            category=category,
-            creativity_mode=creativity_mode,
-            audience=audience,
-            user_prompt=prompt_text,
-        )
+        with st.spinner("Generating concept..."):
+            concept_data = generate_concept(
+                category=category,
+                creativity_mode=creativity_mode,
+                audience=audience,
+                user_prompt=prompt_text,
+            )
 
         title = concept_data["title"]
         principle = concept_data["principle"]
         leonardo_sketch_description = concept_data["leonardo_sketch_description"]
         difficulty = concept_data["difficulty"]
         modern_version = concept_data["modern_version"]
+        modern_principle = concept_data.get(
+            "modern_principle",
+            "The modern operating principle is based on modular engineering, controlled actuation, structural stability, and maintainable subsystems."
+        )
         modern_sketch_description = concept_data["modern_sketch_description"]
         materials = concept_data["materials"]
         use_cases = concept_data["use_cases"]
@@ -282,6 +284,10 @@ with right:
         modern_difficulty = concept_data["modern_difficulty"]
         demand = concept_data["demand"]
         roi = concept_data["roi"]
+        startup_cost = concept_data.get(
+            "startup_cost",
+            "Estimated startup cost: $150,000-$300,000 depending on prototype complexity, testing, and early deployment requirements."
+        )
         investor_summary = concept_data["investor_summary"]
         image_concept = concept_data["image_concept"]
         voice_assistant_concept = concept_data["voice_assistant_concept"]
@@ -295,6 +301,9 @@ with right:
             modern_version=modern_version,
             demand=demand,
             roi=roi,
+            materials=", ".join(materials),
+            use_cases=", ".join(use_cases),
+            investor_summary=investor_summary,
         )
         
         if not image_module:
@@ -367,7 +376,10 @@ with right:
 
         st.markdown("### 🚀 Modern Implementation")
         st.markdown(f'<div class="result-box">{modern_version}</div>', unsafe_allow_html=True)
-
+        
+        st.markdown("### ⚙️ Modern Principle of Operation")
+        st.markdown(f'<div class="result-box">{modern_principle}</div>', unsafe_allow_html=True)
+        
         st.markdown("### 🧩 Modern Sketch Description")
         st.markdown(
             f'<div class="result-box">{modern_sketch_description}</div>',
@@ -400,7 +412,10 @@ with right:
 
         st.markdown("### 📈 Market Demand")
         st.markdown(f'<div class="result-box">{demand}</div>', unsafe_allow_html=True)
-
+        
+        st.markdown("### 💵 Startup Cost Estimate")
+        st.markdown(f'<div class="result-box">{startup_cost}</div>', unsafe_allow_html=True)
+        
         st.markdown("### 💰 ROI Analysis")
         st.markdown(f'<div class="result-box">{roi}</div>', unsafe_allow_html=True)
 
@@ -426,23 +441,50 @@ with right:
         st.markdown(f'<div class="result-box">{blueprint_concept}</div>', unsafe_allow_html=True)
 
     
+    st.markdown("## Previous Concepts")
 
     concepts = get_concepts()
 
     if concepts:
-        for title, category, created_at in concepts:
-            st.markdown(
-                f"""
-                <div class="mini-card">
-                <b>{title}</b><br>
-                Category: {category}<br>
-                Created: {created_at}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+        for concept_id, title, category, created_at in concepts:
+            col1, col2 = st.columns([5, 1])
+
+            with col1:
+                if st.button(f"Open: {title} ({category}) — {created_at}", key=f"open_{concept_id}"):
+                    selected_concept = get_concept_by_id(concept_id)
+
+                    if selected_concept:
+                        (
+                            concept_id,
+                            saved_title,
+                            saved_category,
+                            saved_prompt,
+                            saved_principle,
+                            saved_modern_version,
+                            saved_demand,
+                            saved_roi,
+                            saved_materials,
+                            saved_use_cases,
+                            saved_investor_summary,
+                            saved_created_at,
+                        ) = selected_concept
+
+                        st.markdown("### Saved Concept Details")
+                        st.write(f"**Title:** {saved_title}")
+                        st.write(f"**Category:** {saved_category}")
+                        st.write(f"**Prompt:** {saved_prompt}")
+                        st.write(f"**Principle:** {saved_principle}")
+                        st.write(f"**Modern Version:** {saved_modern_version}")
+                        st.write(f"**Demand:** {saved_demand}")
+                        st.write(f"**ROI:** {saved_roi}")
+                        st.write(f"**Materials:** {saved_materials}")
+                        st.write(f"**Use Cases:** {saved_use_cases}")
+                        st.write(f"**Investor Summary:** {saved_investor_summary}")
+                        st.write(f"**Created:** {saved_created_at}")
+
+            with col2:
+                if st.button("Delete", key=f"delete_{concept_id}"):
+                    delete_concept(concept_id)
+                    st.rerun()
     else:
-        st.markdown(
-            "<div class='mini-card'>No previous concepts yet.</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown("No previous concepts yet.")

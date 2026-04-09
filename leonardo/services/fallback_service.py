@@ -91,21 +91,24 @@ TITLE_PATTERNS = [
 ]
 
 PRINCIPLE_PATTERNS = [
-    "This concept uses {focus} to create a practical Renaissance mechanism for {category}.",
-    "The invention relies on {focus}, combining structural balance and controlled motion for {category}.",
-    "Built around {focus}, this machine solves a {category} problem through simple but disciplined engineering.",
+    "The concept is based on mechanical efficiency and modular construction, applying {focus} to address practical challenges in {category}.",
+    "This invention combines structural stability, controlled motion, and mechanical leverage to improve performance in {category}.",
+    "Designed with practical engineering constraints in mind, the system uses {focus} to deliver reliable operation in {category}.",
+    "The mechanism focuses on durability and maintainability, using simple engineering principles adapted for {category}.",
 ]
 
 MODERN_PATTERNS = [
-    "A modern version could transform this idea into a product for {modern_focus}, using AI control, sensors, lightweight materials, and safer modular architecture.",
-    "In modern engineering, this concept could evolve into a deployable system for {modern_focus}, with autonomous monitoring and data-assisted control.",
-    "Today this invention could become a commercial platform for {modern_focus}, combining digital control systems, advanced materials, and scalable manufacturing.",
+    "A modern implementation could integrate sensors, automation, and modular components to create a deployable solution for {modern_focus}.",
+    "In a contemporary setting, the concept could evolve into an engineered product using lightweight materials, digital monitoring, and scalable architecture.",
+    "Modern engineering could transform this idea into a field-ready system for {modern_focus}, emphasizing reliability, safety, and ease of maintenance.",
+    "The modern version would likely use industrial components, embedded control systems, and standardized modules for practical deployment.",
 ]
 
 DEMAND_PATTERNS = [
-    "Demand could be strong in {modern_focus}, especially where reliability, safety, and deployment speed matter.",
-    "This concept could attract interest in {modern_focus}, particularly in markets that value automation and lower operating risk.",
-    "Commercial demand is plausible in {modern_focus}, where performance improvements can justify premium engineering solutions.",
+    "Market demand may emerge in sectors where operational efficiency and reliability are critical, particularly in {modern_focus}.",
+    "The concept could attract interest in {modern_focus}, especially in environments requiring automation and reduced operational risk.",
+    "Commercial adoption is plausible in {modern_focus}, where improved performance and reduced maintenance costs provide clear value.",
+    "Demand may grow in industries focused on long-term operational efficiency and scalable engineering solutions in {modern_focus}.",
 ]
 
 ROI_PATTERNS = [
@@ -211,12 +214,30 @@ def build_fallback_concept(category, prompt_text, creativity_mode, audience):
         modern_focus=modern_focus,
     )
 
+    modern_principle = (
+        f"The modern operating principle is based on a modular engineering system designed for {modern_focus}. "
+        f"It uses controlled actuation, structural stability, monitoring components, and maintainable subsystems "
+        f"to deliver predictable performance in real operating conditions."
+    )
+    
+    modern_principle = (
+        f"The modern operating principle is based on a modular engineering system designed for {modern_focus}. "
+        f"It uses controlled actuation, structural stability, monitoring components, and maintainable subsystems "
+        f"to deliver predictable performance in real operating conditions."
+    )
+    
     demand = _pick(DEMAND_PATTERNS).format(
         modern_focus=modern_focus,
     )
 
     roi = _pick(ROI_PATTERNS)
 
+    startup_cost = _pick([
+        "Estimated startup cost: $80,000-$150,000 for early prototype development and initial validation.",
+        "Estimated startup cost: $150,000-$300,000 depending on hardware complexity, prototyping needs, and testing.",
+        "Estimated startup cost: $300,000-$600,000 for prototype, engineering validation, and first-stage market entry.",
+    ])
+    
     difficulty = generate_difficulty(category, creativity_mode)
     modern_difficulty = generate_modern_difficulty(category)
     materials = generate_materials(category)
@@ -262,4 +283,6 @@ def build_fallback_concept(category, prompt_text, creativity_mode, audience):
         "image_concept": image_concept,
         "voice_assistant_concept": voice_assistant_concept,
         "blueprint_concept": blueprint_concept,
+        "modern_principle": modern_principle,
+        "startup_cost": startup_cost,
     }

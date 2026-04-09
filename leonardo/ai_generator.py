@@ -1,5 +1,6 @@
 import json
 import os
+import random
 from openai import OpenAI
 
 
@@ -292,7 +293,20 @@ Rules:
     use_cases = [str(x).strip() for x in use_cases if str(x).strip()]
 
     modern_sketch = _build_modern_sketch(modern_name, materials, use_cases)
+    
+    modern_principle = (
+        f"The modern operating principle of '{modern_name}' is based on a modular engineered system "
+        f"designed for practical deployment in {', '.join(use_cases[:2]) if use_cases else 'real operating environments'}. "
+        f"It combines structural stability, controlled operation, maintainable subsystems, and modern integration logic "
+        f"to achieve predictable and safe performance."
+    )
 
+    startup_cost = random.choice([
+        "Estimated startup cost: $80,000-$150,000 for early prototype development and initial validation.",
+        "Estimated startup cost: $150,000-$300,000 for prototype engineering, testing, and early deployment preparation.",
+        "Estimated startup cost: $300,000-$600,000 for advanced prototype development, technical validation, and market entry preparation.",
+    ])
+    
     modern_full = modern_implementation.strip()
     if modern_full.lower().startswith(modern_name.lower()):
         modern_text = modern_full
@@ -305,12 +319,14 @@ Rules:
         "leonardo_sketch_description": leonardo_sketch,
         "difficulty": difficulty_level,
         "modern_version": modern_text,
+        "modern_principle": modern_principle,
         "modern_sketch_description": modern_sketch,
         "materials": materials,
         "use_cases": use_cases,
         "dev_time": development_timeline,
         "modern_difficulty": _modern_difficulty(category),
         "demand": market_demand,
+        "startup_cost": startup_cost,
         "roi": roi_analysis,
         "investor_summary": investor_summary,
         "image_concept": (

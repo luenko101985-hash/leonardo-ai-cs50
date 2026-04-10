@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 
 DB_NAME = "leonardo.db"
@@ -15,16 +16,10 @@ def init_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS concepts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT,
-            category TEXT,
+            title TEXT NOT NULL,
+            category TEXT NOT NULL,
             prompt TEXT,
-            principle TEXT,
-            modern_version TEXT,
-            demand TEXT,
-            roi TEXT,
-            materials TEXT,
-            use_cases TEXT,
-            investor_summary TEXT,
+            concept_json TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -33,38 +28,20 @@ def init_db():
     conn.close()
 
 
-def save_concept(
-    title,
-    category,
-    prompt,
-    principle,
-    modern_version,
-    demand,
-    roi,
-    materials,
-    use_cases,
-    investor_summary,
-):
+def save_concept(title, category, prompt, concept_data):
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
         INSERT INTO concepts (
-            title, category, prompt, principle, modern_version,
-            demand, roi, materials, use_cases, investor_summary
+            title, category, prompt, concept_json
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?)
     """, (
         title,
         category,
         prompt,
-        principle,
-        modern_version,
-        demand,
-        roi,
-        materials,
-        use_cases,
-        investor_summary,
+        json.dumps(concept_data, ensure_ascii=False),
     ))
 
     conn.commit()
@@ -92,8 +69,7 @@ def get_concept_by_id(concept_id):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT id, title, category, prompt, principle, modern_version,
-               demand, roi, materials, use_cases, investor_summary, created_at
+        SELECT id, title, category, prompt, concept_json, created_at
         FROM concepts
         WHERE id = ?
     """, (concept_id,))
@@ -111,3 +87,21 @@ def delete_concept(concept_id):
 
     conn.commit()
     conn.close()
+
+def get_concept_by_id(concept_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT concept_json FROM concepts WHERE id = ?",
+        (concept_id,)
+    )
+
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        import json
+        return json.loads(row[0])
+
+    return None

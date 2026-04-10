@@ -267,22 +267,405 @@ def build_fallback_concept(category, prompt_text, creativity_mode, audience):
         modern_version += " Public-facing angle: the concept should stay understandable and visually compelling."
 
     return {
-        "title": title,
-        "principle": principle,
-        "leonardo_sketch_description": leonardo_sketch_description,
-        "difficulty": difficulty,
-        "modern_version": modern_version,
-        "modern_sketch_description": modern_sketch_description,
-        "materials": materials,
-        "use_cases": use_cases,
-        "dev_time": dev_time,
-        "modern_difficulty": modern_difficulty,
-        "demand": demand,
-        "roi": roi,
-        "investor_summary": investor_summary,
-        "image_concept": image_concept,
-        "voice_assistant_concept": voice_assistant_concept,
-        "blueprint_concept": blueprint_concept,
-        "modern_principle": modern_principle,
-        "startup_cost": startup_cost,
-    }
+    "title": f"{category.title()} Innovation System",
+
+    "leonardo_concept": (
+        f"A Renaissance-inspired mechanical concept designed by Leonardo da Vinci "
+        f"to improve efficiency in {category} applications."
+    ),
+
+    "leonardo_sketch_description": (
+        "A sepia-toned Renaissance notebook sketch featuring gears, pulleys, "
+        "wooden frames, and handwritten annotations."
+    ),
+
+    "modern_product_name": f"{category.title()} Intelligent System",
+
+    "modern_category": category,
+
+    "executive_summary": (
+        f"A modern engineering solution designed for {category} operations "
+        f"with scalable deployment and automation capabilities."
+    ),
+
+    "problem_statement": (
+        f"Organizations in {category} often struggle with efficiency, "
+        f"safety, and automation limitations."
+    ),
+
+    "target_users": [
+        "Engineering teams",
+        "Industrial companies",
+        "Technology organizations"
+    ],
+
+    "industries": [
+        category,
+        "Industrial",
+        "Technology"
+    ],
+
+    "use_cases": [
+        "Automation",
+        "Operational efficiency",
+        "Deployment optimization"
+    ],
+
+    "modern_principle": (
+        "The system operates using modular architecture, automation logic, "
+        "and scalable deployment strategy."
+    ),
+
+    "system_components": [
+        "Control module",
+        "Structural frame",
+        "Sensors",
+        "Automation system"
+    ],
+
+    "materials": [
+        "Aluminum frame",
+        "Composite materials",
+        "Industrial electronics"
+    ],
+
+    "technical_requirements": [
+        "Power supply",
+        "Control software",
+        "Safety system"
+    ],
+
+    "modern_sketch_description": (
+        "Modern industrial blueprint with modular components and "
+        "deployment-ready architecture."
+    ),
+
+    "implementation_roadmap": {
+        "prototype": "Initial engineering prototype",
+        "mvp": "Operational MVP deployment",
+        "pilot": "Pilot deployment with partners",
+        "production": "Full production deployment"
+    },
+
+    "implementation_guides": {
+        "prototype": {
+            "execution_plan": {
+                "goal": "Create a working early-stage prototype to validate the core mechanism and operating logic.",
+                "steps": [
+                    "Define core functional scope for the prototype",
+                    "Assemble a simplified engineering model",
+                    "Test the main mechanism in controlled conditions"
+                ],
+                "specialists": [
+                    "Mechanical engineer",
+                    "Prototype engineer",
+                    "Technical project lead"
+                ],
+                "technologies": [
+                    "Rapid prototyping tools",
+                    "Basic control systems",
+                    "Testing equipment"
+                ],
+                "estimated_budget": "$25,000-$60,000",
+                "stage_risks": [
+                    "Core mechanism may fail under testing",
+                    "Prototype may not reflect real operating conditions"
+                ],
+                "readiness_criteria": [
+                    "Prototype performs core function",
+                    "Main engineering assumptions are validated"
+                ],
+                "expected_output": "A testable prototype demonstrating the core concept."
+            },
+            "technical_architecture": {
+                "system_schema": "Core control unit connected to the main mechanical structure and operating module.",
+                "module_interaction": "The control logic triggers the mechanism, while the structural frame supports repeatable operation.",
+                "process_flow": "Input signal → control action → mechanism activation → observed output.",
+                "deployment_logic": "Prototype remains in lab or controlled pilot environment only."
+            },
+            "resources_budget": {
+                "team": [
+                    "Prototype engineer",
+                    "Mechanical engineer",
+                    "Technical assistant"
+                ],
+                "stack": [
+                    "CAD tools",
+                    "Basic embedded control",
+                    "Testing software"
+                ],
+                "materials": [
+                    "Prototype frame materials",
+                    "Test components",
+                    "Control hardware"
+                ],
+                "cost_notes": "Budget mainly covers prototyping, testing, and engineering labor."
+            },
+            "validation": {
+                "tests": [
+                    "Core functionality test",
+                    "Stability test",
+                    "Basic safety test"
+                ],
+                "kpi": [
+                    "Functional reliability",
+                    "Repeatability",
+                    "Performance consistency"
+                ],
+                "success_criteria": [
+                    "Prototype works in controlled testing",
+                    "No critical design flaw blocks next phase"
+                ]
+            }
+        },
+
+        "mvp": {
+            "execution_plan": {
+                "goal": "Build a minimum viable product that performs the essential value proposition in realistic use conditions.",
+                "steps": [
+                    "Refine prototype into MVP architecture",
+                    "Integrate essential modules",
+                    "Test the MVP in limited operational scenarios"
+                ],
+                "specialists": [
+                    "Product engineer",
+                    "Software/controls engineer",
+                    "Systems integrator"
+                ],
+                "technologies": [
+                    "Embedded systems",
+                    "Control software",
+                    "Operational sensors"
+                ],
+                "estimated_budget": "$80,000-$180,000",
+                "stage_risks": [
+                    "Integration between modules may be unstable",
+                    "MVP may be too limited for user validation"
+                ],
+                "readiness_criteria": [
+                    "Essential system modules work together",
+                    "MVP demonstrates clear user value"
+                ],
+                "expected_output": "A functional MVP ready for early external evaluation."
+            },
+            "technical_architecture": {
+                "system_schema": "Integrated control, sensing, and actuation modules connected through a central logic layer.",
+                "module_interaction": "Sensors collect input, control layer processes data, output modules perform the required action.",
+                "process_flow": "Operational input → system analysis → module coordination → functional output.",
+                "deployment_logic": "Deploy MVP in selected low-risk scenarios with close monitoring."
+            },
+            "resources_budget": {
+                "team": [
+                    "Systems engineer",
+                    "Software engineer",
+                    "Field testing specialist"
+                ],
+                "stack": [
+                    "Embedded software",
+                    "Sensor stack",
+                    "Control platform"
+                ],
+                "materials": [
+                    "Production-like components",
+                    "Sensor modules",
+                    "Protective housing"
+                ],
+                "cost_notes": "Budget expands due to integration work, iteration, and field validation."
+            },
+            "validation": {
+                "tests": [
+                    "Module integration test",
+                    "Field functionality test",
+                    "User scenario validation"
+                ],
+                "kpi": [
+                    "Operational uptime",
+                    "Accuracy",
+                    "Task completion rate"
+                ],
+                "success_criteria": [
+                    "MVP performs reliably in limited real-world use",
+                    "Pilot customers can understand and evaluate product value"
+                ]
+            }
+        },
+
+        "pilot": {
+            "execution_plan": {
+                "goal": "Validate the system with real users or organizations in controlled but practical deployment scenarios.",
+                "steps": [
+                    "Select pilot partner environment",
+                    "Deploy pilot units",
+                    "Collect performance and user feedback data"
+                ],
+                "specialists": [
+                    "Deployment manager",
+                    "Field engineer",
+                    "Customer success lead"
+                ],
+                "technologies": [
+                    "Monitoring systems",
+                    "Deployment tooling",
+                    "Reporting dashboard"
+                ],
+                "estimated_budget": "$150,000-$350,000",
+                "stage_risks": [
+                    "Operational environment may expose unexpected failures",
+                    "Users may require features not included in pilot version"
+                ],
+                "readiness_criteria": [
+                    "Pilot partner can operate the system",
+                    "Performance data supports scale-up decision"
+                ],
+                "expected_output": "Validated pilot results, field data, and implementation feedback."
+            },
+            "technical_architecture": {
+                "system_schema": "Pilot deployment architecture adds monitoring, reporting, and support workflow layers.",
+                "module_interaction": "Core system interacts with field environment while monitoring tools collect operational metrics.",
+                "process_flow": "Deployment → live operation → monitoring → issue tracking → optimization cycle.",
+                "deployment_logic": "Deploy to selected pilot sites with support and reporting processes in place."
+            },
+            "resources_budget": {
+                "team": [
+                    "Deployment engineer",
+                    "Support specialist",
+                    "Operations analyst"
+                ],
+                "stack": [
+                    "Monitoring dashboard",
+                    "Support workflow tools",
+                    "Analytics layer"
+                ],
+                "materials": [
+                    "Pilot-ready hardware",
+                    "Deployment accessories",
+                    "Support equipment"
+                ],
+                "cost_notes": "Pilot costs include support, logistics, deployment setup, and operational monitoring."
+            },
+            "validation": {
+                "tests": [
+                    "Field performance test",
+                    "User acceptance test",
+                    "Operational resilience test"
+                ],
+                "kpi": [
+                    "User satisfaction",
+                    "Deployment stability",
+                    "Operational efficiency gain"
+                ],
+                "success_criteria": [
+                    "Pilot users confirm value",
+                    "System performs consistently in real operating conditions"
+                ]
+            }
+        },
+
+        "production": {
+            "execution_plan": {
+                "goal": "Scale the validated system into a production-ready solution with repeatable deployment and support model.",
+                "steps": [
+                    "Standardize final system design",
+                    "Prepare manufacturing or deployment pipeline",
+                    "Launch production rollout and support processes"
+                ],
+                "specialists": [
+                    "Production engineer",
+                    "Operations manager",
+                    "Quality assurance lead"
+                ],
+                "technologies": [
+                    "Production systems",
+                    "QA processes",
+                    "Deployment automation"
+                ],
+                "estimated_budget": "$300,000-$1,000,000+",
+                "stage_risks": [
+                    "Scaling may increase cost or reduce reliability",
+                    "Operational support requirements may grow faster than expected"
+                ],
+                "readiness_criteria": [
+                    "System is standardized for repeatable rollout",
+                    "Support and QA processes are documented and active"
+                ],
+                "expected_output": "Production-ready solution with deployment, support, and scale model."
+            },
+            "technical_architecture": {
+                "system_schema": "Production architecture includes final system design, monitoring, support, and maintenance processes.",
+                "module_interaction": "Operational modules, support systems, and analytics layers work together in a repeatable deployment model.",
+                "process_flow": "Production setup → deployment → operation → maintenance → performance optimization.",
+                "deployment_logic": "Roll out through standardized deployment packages, trained teams, and documented operating procedures."
+            },
+            "resources_budget": {
+                "team": [
+                    "Production lead",
+                    "QA engineer",
+                    "Deployment operations team"
+                ],
+                "stack": [
+                    "Production software stack",
+                    "Monitoring platform",
+                    "Support infrastructure"
+                ],
+                "materials": [
+                    "Production-grade components",
+                    "Standardized assemblies",
+                    "Deployment kits"
+                ],
+                "cost_notes": "Costs shift toward scaling, QA, logistics, and operational support."
+            },
+            "validation": {
+                "tests": [
+                    "Production QA testing",
+                    "Scalability test",
+                    "Reliability regression testing"
+                ],
+                "kpi": [
+                    "Deployment speed",
+                    "Failure rate",
+                    "Support efficiency"
+                ],
+                "success_criteria": [
+                    "System can be deployed repeatedly at quality standard",
+                    "Operational support model is sustainable"
+                ]
+            }
+        }
+    },
+    
+    "deployment_strategy": (
+        "Phased deployment starting from pilot customers."
+    ),
+
+    "risks": [
+        "Engineering complexity",
+        "Integration challenges"
+    ],
+
+    "constraints": [
+        "Budget limitations",
+        "Technical integration"
+    ],
+
+    "market_demand": (
+        f"Growing demand for automation solutions in {category} sector."
+    ),
+
+    "startup_cost": (
+        "Estimated startup cost: $100,000-$300,000"
+    ),
+
+    "roi": (
+        "Estimated ROI within 2-3 years."
+    ),
+
+    "investor_summary": (
+        "Scalable engineering product with strong commercial potential."
+    ),
+
+    "difficulty": "High",
+
+    "modern_difficulty": "High",
+
+    "dev_time": "Prototype: 4-6 months • MVP: 8-12 months • Production: 1-2 years"
+}

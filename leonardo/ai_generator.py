@@ -60,198 +60,212 @@ def generate_system_name(category: str) -> str:
     return names.get(category, "Leonardo System")
 
 
-def generate_leonardo_concept(category: str, prompt: str, creativity: str, audience: str) -> dict:
+def generate_leonardo_concept(category: str, user_prompt_text: str, creativity: str, audience: str) -> dict:
     client = _get_client()
     system_name = generate_system_name(category)
-    system_prompt = """
-You are Leonardo da Vinci combined with a modern product engineer and startup strategist.
+    system_prompt = f"""
+    You are a professional engineering innovation consultant.
 
-Project Name: {system_name}
-Use this name consistently across Leonardo concept, modern implementation, and business analysis.
+    Generate a professional product concept inspired by Leonardo da Vinci thinking,
+    but focused on modern implementation, engineering feasibility, and business value.
 
-HISTORICAL ACCURACY RULE:
+    Return response strictly as JSON.
 
-The Leonardo concept must reflect Renaissance-era environments.
+    Required JSON structure:
 
-Avoid:
-- skyscrapers
-- modern cities
-- modern infrastructure
-- modern terminology
-- modern disaster scenarios
+    {{
+    "title": "...",
 
-Instead use:
-- towers
-- castles
-- fortifications
-- ships
-- cliffs
-- bridges
-- medieval cities
-- siege scenarios
+    "leonardo_concept": "...",
+    "leonardo_sketch_description": "...",
 
-You must produce TWO CLEARLY SEPARATED layers:
+    "modern_product_name": "...",
+    "modern_category": "...",
+    "executive_summary": "...",
 
-LAYER 1 — LEONARDO CONCEPT
-This must be historically believable in the Renaissance.
-Allowed:
-- wood
-- ropes
-- pulleys
-- gears
-- levers
-- springs
-- counterweights
-- iron fittings
-- simple wind-driven mechanisms (mills, sails for motion only)
-- water power
-- hand-powered mechanics
-- nature observation
+    "problem_statement": "...",
+    "target_users": ["...", "..."],
+    "industries": ["...", "..."],
+    "use_cases": ["...", "..."],
 
-LEONARDO REALISM:
+    "modern_principle": "...",
+    "system_components": ["...", "..."],
+    "materials": ["...", "..."],
+    "technical_requirements": ["...", "..."],
+    "modern_sketch_description": "...",
 
-The Leonardo invention must be mechanically simple and plausible for Renaissance technology.
+    "implementation_roadmap": {{
+        "prototype": "...",
+        "mvp": "...",
+        "pilot": "...",
+        "production": "..."
+    }},
 
-Prefer:
-- pulleys
-- counterweights
-- gears
-- winches
-- ramps
-- carts
-- scaffolding
-- inclined rails
-- sliding platforms
+    "implementation_guides": {{
+        "prototype": {{
+            "execution_plan": {{
+                "goal": "...",
+                "steps": ["...", "...", "..."],
+                "specialists": ["...", "..."],
+                "technologies": ["...", "..."],
+                "estimated_budget": "...",
+                "stage_risks": ["...", "..."],
+                "readiness_criteria": ["...", "..."],
+                "expected_output": "..."
+            }},
+            "technical_architecture": {{
+                "system_schema": "...",
+                "module_interaction": "...",
+                "process_flow": "...",
+                "deployment_logic": "..."
+            }},
+            "resources_budget": {{
+                "team": ["...", "..."],
+                "stack": ["...", "..."],
+                "materials": ["...", "..."],
+                "cost_notes": "..."
+            }},
+            "validation": {{
+                "tests": ["...", "..."],
+                "kpi": ["...", "..."],
+                "success_criteria": ["...", "..."]
+            }}
+        }},
 
-Avoid:
-- complex aerodynamic systems
-- unstable mechanisms
-- overly sophisticated engineering
-- multi-stage mechanical systems
+        "mvp": {{
+            "execution_plan": {{
+                "goal": "...",
+                "steps": ["...", "...", "..."],
+                "specialists": ["...", "..."],
+                "technologies": ["...", "..."],
+                "estimated_budget": "...",
+                "stage_risks": ["...", "..."],
+                "readiness_criteria": ["...", "..."],
+                "expected_output": "..."
+            }},
+            "technical_architecture": {{
+                "system_schema": "...",
+                "module_interaction": "...",
+                "process_flow": "...",
+                "deployment_logic": "..."
+            }},
+            "resources_budget": {{
+                "team": ["...", "..."],
+                "stack": ["...", "..."],
+                "materials": ["...", "..."],
+                "cost_notes": "..."
+            }},
+            "validation": {{
+                "tests": ["...", "..."],
+                "kpi": ["...", "..."],
+                "success_criteria": ["...", "..."]
+            }}
+        }},
 
-Forbidden in Leonardo layer:
-- electronics
-- AI
-- software
-- satellites
-- sensors
-- batteries
-- composite materials
-- drones
-- GPS
-- digital systems
+        "pilot": {{
+            "execution_plan": {{
+                "goal": "...",
+                "steps": ["...", "...", "..."],
+                "specialists": ["...", "..."],
+                "technologies": ["...", "..."],
+                "estimated_budget": "...",
+                "stage_risks": ["...", "..."],
+                "readiness_criteria": ["...", "..."],
+                "expected_output": "..."
+            }},
+            "technical_architecture": {{
+                "system_schema": "...",
+                "module_interaction": "...",
+                "process_flow": "...",
+                "deployment_logic": "..."
+            }},
+            "resources_budget": {{
+                "team": ["...", "..."],
+                "stack": ["...", "..."],
+                "materials": ["...", "..."],
+                "cost_notes": "..."
+            }},
+            "validation": {{
+                "tests": ["...", "..."],
+                "kpi": ["...", "..."],
+                "success_criteria": ["...", "..."]
+            }}
+        }},
 
-HISTORICAL ACCURACY:
+        "production": {{
+            "execution_plan": {{
+                "goal": "...",
+                "steps": ["...", "...", "..."],
+                "specialists": ["...", "..."],
+                "technologies": ["...", "..."],
+                "estimated_budget": "...",
+                "stage_risks": ["...", "..."],
+                "readiness_criteria": ["...", "..."],
+                "expected_output": "..."
+            }},
+            "technical_architecture": {{
+                "system_schema": "...",
+                "module_interaction": "...",
+                "process_flow": "...",
+                "deployment_logic": "..."
+            }},
+            "resources_budget": {{
+                "team": ["...", "..."],
+                "stack": ["...", "..."],
+                "materials": ["...", "..."],
+                "cost_notes": "..."
+            }},
+            "validation": {{
+                "tests": ["...", "..."],
+                "kpi": ["...", "..."],
+                "success_criteria": ["...", "..."]
+            }}
+        }}
+    }},
+    
+    "deployment_strategy": "...",
 
-The Leonardo concept must use specific Renaissance contexts such as:
-- towers
-- fortified walls
-- castles
-- bridges
-- ships
-- cliffs
-- cathedral roofs
-- siege structures
+    "risks": ["...", "..."],
+    "constraints": ["...", "..."],
 
-In Leonardo sketch descriptions, prefer words like:
-- craftsmen
-- assistants
-- operators
-- builders
+    "market_demand": "...",
+    "startup_cost": "...",
+    "roi": "...",
+    "investor_summary": "...",
 
-Avoid modern professional framing such as:
-- engineers
-- industrial teams
-- technical staff
+    "difficulty": "...",
+    "modern_difficulty": "...",
+    "dev_time": "..."
+    }}
 
-Avoid generic phrases like:
-- emergency situations
-- elevated structures
-- disaster zones
-when writing the Leonardo section.
+    Category: {category}
+    User prompt: {user_prompt_text}
+    Creativity level: {creativity}
+    Audience: {audience}
 
-LAYER 2 — MODERN IMPLEMENTATION
-This must be a modern engineering product or system.
-It must NOT repeat the Leonardo concept in the same physical form.
-It must evolve the FUNCTION, not the FORM.
-
-If Leonardo uses wings, bird inspiration, or mechanical lift,
-the modern version should transition toward:
-- drones
-- multirotor systems
-- VTOL aircraft
-- autonomous emergency systems
-- industrial platforms
-- scalable modern products
-
-IMPORTANT:
-The modern implementation must be:
-- practical
-- commercial
-- industrial
-- realistic
-- written like a product brief
-
-The modern implementation must avoid exaggerated marketing language.
-Use clear engineering language instead of promotional wording.
-
-The modern implementation must directly address the user's environment or scenario.
-If the prompt includes Mars, underwater, volcano, etc., the modern version must explicitly reflect it.
-
-MARKET & BUSINESS STYLE:
-
-The Market & Business section must sound like a startup pitch, not a formal report.
-
-Avoid generic corporate phrases like:
-- increasing demand
-- viable option
-- emerging market
-
-Instead:
-- describe concrete market drivers
-- mention industries
-- reference real-world applications
-- explain why investors would care
-
-Include 2-3 concrete industries where this product could be used.
-
-Use confident but realistic language.
-Avoid hype or exaggerated claims.
-
-Return ONLY valid JSON.
-Do not include markdown.
-Do not include commentary.
-
-Required JSON keys:
-{
-  "leonardo_name": "...",
-  "leonardo_invention": "...",
-  "principle": "...",
-  "leonardo_sketch": "...",
-  "modern_name": "...",
-  "modern_implementation": "...",
-  "market_demand": "...",
-  "roi_analysis": "...",
-  "difficulty_level": "...",
-  "development_timeline": "...",
-  "materials": ["...", "..."],
-  "use_cases": ["...", "..."],
-  "investor_summary": "..."
-}
-"""
+    Important:
+    - Leonardo section must be short
+    - Modern section must be detailed and professional
+    - Avoid fantasy concepts
+    - Focus on real-world implementation
+    - implementation_guides must be detailed and practical
+    - each roadmap stage must include execution_plan, technical_architecture, resources_budget, and validation
+    - use professional engineering and project planning language
+    - avoid generic filler text
+    """
 
     user_prompt = f"""
-Category: {category}
-Creativity mode: {creativity}
-Target audience: {audience}
-User prompt: {prompt}
+    Category: {category}
+    Creativity mode: {creativity}
+    Target audience: {audience}
+    User prompt: {user_prompt_text}
 
-Rules:
-- The Leonardo concept must sound like a Renaissance notebook concept.
-- The modern implementation must sound like a present-day engineering product brief.
-- Do not reuse the same name for both layers.
-- Do not let the modern implementation inherit Leonardo-style mechanics.
-"""
+    Rules:
+    - The Leonardo concept must sound like a Renaissance notebook concept.
+    - The modern implementation must sound like a present-day engineering product brief.
+    - Do not reuse the same name for both layers.
+    - Do not let the modern implementation inherit Leonardo-style mechanics.
+    """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -269,76 +283,4 @@ Rules:
 
     data = json.loads(content)
 
-    leonardo_name = data.get("leonardo_name", "Unnamed Leonardo Concept").strip()
-    leonardo_invention = data.get("leonardo_invention", "").strip()
-    principle = data.get("principle", "").strip()
-    leonardo_sketch = data.get("leonardo_sketch", "").strip()
-    modern_name = data.get("modern_name", "Unnamed Modern Product").strip()
-    modern_implementation = data.get("modern_implementation", "").strip()
-    market_demand = data.get("market_demand", "").strip()
-    roi_analysis = data.get("roi_analysis", "").strip()
-    difficulty_level = data.get("difficulty_level", "High").strip()
-    development_timeline = data.get("development_timeline", "Prototype: 4-6 months • MVP: 8-12 months • Product: 1-2 years").strip()
-    investor_summary = data.get("investor_summary", "").strip()
-
-    materials = data.get("materials", [])
-    if not isinstance(materials, list):
-        materials = [str(materials)]
-
-    use_cases = data.get("use_cases", [])
-    if not isinstance(use_cases, list):
-        use_cases = [str(use_cases)]
-
-    materials = [str(x).strip() for x in materials if str(x).strip()]
-    use_cases = [str(x).strip() for x in use_cases if str(x).strip()]
-
-    modern_sketch = _build_modern_sketch(modern_name, materials, use_cases)
-    
-    modern_principle = (
-        f"The modern operating principle of '{modern_name}' is based on a modular engineered system "
-        f"designed for practical deployment in {', '.join(use_cases[:2]) if use_cases else 'real operating environments'}. "
-        f"It combines structural stability, controlled operation, maintainable subsystems, and modern integration logic "
-        f"to achieve predictable and safe performance."
-    )
-
-    startup_cost = random.choice([
-        "Estimated startup cost: $80,000-$150,000 for early prototype development and initial validation.",
-        "Estimated startup cost: $150,000-$300,000 for prototype engineering, testing, and early deployment preparation.",
-        "Estimated startup cost: $300,000-$600,000 for advanced prototype development, technical validation, and market entry preparation.",
-    ])
-    
-    modern_full = modern_implementation.strip()
-    if modern_full.lower().startswith(modern_name.lower()):
-        modern_text = modern_full
-    else:
-        modern_text = f"{modern_name}. {modern_full}" if modern_full else modern_name
-
-    return {
-        "title": f"{leonardo_name} — {leonardo_invention}" if leonardo_invention else leonardo_name,
-        "principle": principle,
-        "leonardo_sketch_description": leonardo_sketch,
-        "difficulty": difficulty_level,
-        "modern_version": modern_text,
-        "modern_principle": modern_principle,
-        "modern_sketch_description": modern_sketch,
-        "materials": materials,
-        "use_cases": use_cases,
-        "dev_time": development_timeline,
-        "modern_difficulty": _modern_difficulty(category),
-        "demand": market_demand,
-        "startup_cost": startup_cost,
-        "roi": roi_analysis,
-        "investor_summary": investor_summary,
-        "image_concept": (
-            f"Image generation concept enabled: the system can later create a Renaissance sketch for "
-            f"'{leonardo_name}' and a separate modern concept illustration for '{modern_name}'."
-        ),
-        "voice_assistant_concept": (
-            f"The voice assistant could explain the historical logic of '{leonardo_name}', then guide the user "
-            f"through the modern product strategy of '{modern_name}', including demand, feasibility, and ROI."
-        ),
-        "blueprint_concept": (
-            f"Blueprint concept enabled: the system can later output a Leonardo-style sketch sheet for "
-            f"'{leonardo_name}' and a modern engineering blueprint for '{modern_name}'."
-        ),
-    }
+    return data

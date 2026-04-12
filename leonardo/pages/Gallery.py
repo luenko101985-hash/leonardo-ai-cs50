@@ -63,24 +63,25 @@ else:
 
             st.caption(f"Created: {created_at}")
 
-            col1, col2, col3 = st.columns(3)
+            action1, action2, action3 = st.columns([1, 1, 1])
 
-            with col1:
+            with action1:
                 star_label = "⭐" if is_favorite else "☆"
-                if st.button(star_label, key=f"favorite_gallery_{image_id}"):
+                if st.button(star_label, key=f"favorite_gallery_{image_id}", help="Favorite"):
                     toggle_image_favorite(image_id)
                     st.rerun()
 
-            with col2:
-                if st.button("Delete", key=f"delete_gallery_{image_id}"):
+            with action2:
+                if st.button("🗑", key=f"delete_gallery_{image_id}", help="Delete"):
                     delete_image_asset(image_id)
                     st.rerun()
 
-            with col3:
+            with action3:
                 st.download_button(
-                    label="Download",
+                    label="⬇",
                     data=image_bytes,
                     file_name=f"{image_type}_{image_id}.png",
                     mime="image/png",
-                    key=f"download_gallery_{image_id}"
+                    key=f"download_gallery_{image_id}",
+                    help="Download",
                 )

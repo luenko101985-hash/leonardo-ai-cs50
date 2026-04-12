@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-
+import streamlit.components.v1 as components
 from services.image_service import generate_leonardo_image_prompt, generate_blueprint_image_prompt
 from services.concept_service import generate_concept
 from config import CATEGORIES
@@ -141,6 +141,8 @@ def render_controls():
         ["Engineers", "Investors", "Students", "General Public"]
     )
 
+    render_voice_prompt()
+
     user_prompt = st.text_area(
         "Prompt / Idea",
         placeholder="Example: Create a Renaissance-inspired rescue glider for dangerous mountain missions...",
@@ -180,6 +182,170 @@ def render_system_status():
         st.markdown(
             '<div class="status-warn">🟡 OpenAI Integration: Not detected, fallback mode will be used</div>',
             unsafe_allow_html=True
+        )
+
+
+def render_voice_assistant(concept_data):
+    st.markdown("## 🧠 Voice Assistant")
+
+    title = concept_data.get("title", "")
+    executive_summary = concept_data.get("executive_summary", "")
+    market_demand = concept_data.get("market_demand", "")
+    investor_summary = concept_data.get("investor_summary", "")
+    modern_principle = concept_data.get("modern_principle", "")
+
+    voice_language = st.selectbox(
+        "Voice language",
+        ["English", "Русский"],
+        key="voice_language_selector"
+    )
+
+    if voice_language == "Русский":
+        summary_text = (
+            f"Название проекта: {title}. "
+            f"Краткое описание: {executive_summary}. "
+            f"Рыночный спрос: {market_demand}. "
+            f"Инвесторское резюме: {investor_summary}."
+        )
+
+        investor_text = (
+            f"Инвесторская презентация проекта {title}. "
+            f"{investor_summary}. "
+            f"Рыночный спрос: {market_demand}."
+        )
+
+        engineering_text = (
+            f"Инженерный обзор проекта {title}. "
+            f"{modern_principle}."
+        )
+
+        speech_lang = "ru-RU"
+
+    else:
+        summary_text = (
+            f"Project title: {title}. "
+            f"Executive summary: {executive_summary}. "
+            f"Market demand: {market_demand}. "
+            f"Investor summary: {investor_summary}."
+        )
+
+        investor_text = (
+            f"Investor pitch. {title}. "
+            f"{investor_summary}. "
+            f"Market demand: {market_demand}."
+        )
+
+        engineering_text = (
+            f"Engineering overview for {title}. "
+            f"{modern_principle}."
+        )
+
+        speech_lang = "en-US"
+
+    top1, top2, top3 = st.columns(3)
+
+    with top1:
+        play_summary = st.button("▶ Summary", key="voice_summary", use_container_width=True)
+
+    with top2:
+        play_investor = st.button("🎧 Investor", key="voice_investor", use_container_width=True)
+
+    with top3:
+        play_engineering = st.button("⚙ Engineering", key="voice_engineering", use_container_width=True)
+
+    bottom1, bottom2, bottom3 = st.columns(3)
+
+    with bottom1:
+        pause_voice = st.button("⏸ Pause", key="voice_pause", use_container_width=True)
+
+    with bottom2:
+        resume_voice = st.button("▶ Resume", key="voice_resume", use_container_width=True)
+
+    with bottom3:
+        stop_voice = st.button("⏹ Stop", key="voice_stop", use_container_width=True)
+
+    def speak(text, lang):
+        escaped = (
+            text.replace("\\", "\\\\")
+            .replace("`", "\\`")
+            .replace('"', '\\"')
+            .replace("\n", " ")
+        )
+
+        components.html(
+            f"""
+            <script>
+                const text = "{escaped}";
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                utterance.lang = "{lang}";
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(utterance);
+            </script>
+            """,
+            height=0,
+        )
+
+    if play_summary:
+        speak(summary_text, speech_lang)
+
+    if play_investor:
+        speak(investor_text, speech_lang)
+
+    if play_engineering:
+        speak(engineering_text, speech_lang)
+
+    if pause_voice:
+        components.html(
+            """
+            <script>
+                window.speechSynthesis.pause();
+            </script>
+            """,
+            height=0,
+        )
+
+    if resume_voice:
+        components.html(
+            """
+            <script>
+                window.speechSynthesis.resume();
+            </script>
+            """,
+            height=0,
+        )
+
+
+def render_voice_prompt():
+    st.markdown("### 🎙 Voice Prompt")
+
+    speak = st.button("🎙 Speak Prompt Input", use_container_width=True)
+    
+    if speak:
+        components.html(
+            """
+            <script>
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = "en-US";
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onresult = function(event) {
+                const text = event.results[0][0].transcript;
+                const streamlitDoc = window.parent.document;
+                const textarea = streamlitDoc.querySelector('textarea');
+
+                if (textarea) {
+                    textarea.value = text;
+                    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            };
+
+            recognition.start();
+            </script>
+            """,
+            height=0,
         )
 
 st.set_page_config(
@@ -535,6 +701,8 @@ def render_concept_result(concept_data):
         st.markdown(f'<div class="result-box"><b>ROI:</b><br>{roi}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="result-box"><b>Investor Summary:</b><br>{investor_summary}</div>', unsafe_allow_html=True)
 
+        render_voice_assistant(concept_data)
+
         st.markdown("## Delivery Metrics")
         st.markdown(f'<div class="result-box"><b>Concept Difficulty:</b><br>{difficulty}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="result-box"><b>Modern Difficulty:</b><br>{modern_difficulty}</div>', unsafe_allow_html=True)
@@ -542,7 +710,7 @@ def render_concept_result(concept_data):
        
         pdf_filename = f"{title.replace(' ', '_')}.pdf"
 
-        if st.button("📄 Export Full Project Plan (PDF)", key="export_pdf_main"):
+        if st.button("📦 Export Full Project Package (PDF)", key="export_pdf_main"):
             current_concept_id = st.session_state.get("current_concept_id")
             saved_images = get_images_for_concept(current_concept_id) if current_concept_id else []
 

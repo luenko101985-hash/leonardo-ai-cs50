@@ -129,7 +129,6 @@ def render_profile_card():
     <div class="profile-role-badge">Creator / Student</div>
 </div>
 <div class="profile-name">Aleksei</div>
-<div class="profile-meta">Building Renaissance-inspired invention systems for modern product thinking.</div>
 <div class="profile-stats-grid">
     <div class="profile-stat-box">
         <div class="profile-stat-label">Saved Concepts</div>
@@ -147,46 +146,6 @@ def render_profile_card():
 </div>""",
         unsafe_allow_html=True
     )
-
-
-def render_topbar_menu():
-    if "show_topbar_menu" not in st.session_state:
-        st.session_state["show_topbar_menu"] = False
-
-    if st.button("⋮", key="topbar_menu_button", help="Interface"):
-        st.session_state["show_topbar_menu"] = not st.session_state["show_topbar_menu"]
-
-    if st.session_state["show_topbar_menu"]:
-        st.markdown('<div class="topbar-menu-panel">', unsafe_allow_html=True)
-
-        selected_language = st.selectbox(
-            "Language",
-            ["English", "Русский", "Svenska"],
-            index=["English", "Русский", "Svenska"].index(
-                st.session_state.get("selected_language", "English")
-            ),
-            key="selected_language_menu"
-        )
-
-        theme_mode = st.selectbox(
-            "Theme style",
-            ["Leonardo Dark", "Midnight Blue", "Warm Sepia"],
-            index=["Leonardo Dark", "Midnight Blue", "Warm Sepia"].index(
-                st.session_state.get("theme_mode", "Leonardo Dark")
-            ),
-            key="theme_mode_menu"
-        )
-
-        st.session_state["selected_language"] = selected_language
-        st.session_state["theme_mode"] = theme_mode
-
-        st.markdown("</div>", unsafe_allow_html=True)
-
-
-def render_topbar_menu_button():
-    if st.button("⋮", key="topbar_menu_toggle", help="Interface settings"):
-        st.session_state["show_topbar_menu"] = not st.session_state["show_topbar_menu"]
-        st.rerun()
 
 
 def render_controls():
@@ -619,6 +578,18 @@ st.markdown(
         margin-bottom: 0;
     }}
 
+    .hero-undertext {{
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 18px;
+        font-style: italic;
+        color: #e8d7b1;
+        line-height: 1.7;
+        margin-top: 10px;
+        margin-bottom: 18px;
+        max-width: 900px;
+        text-shadow: 0 2px 14px rgba(0,0,0,0.30);
+    }}
+
     /* ---------- Profile card ---------- */
     .profile-card {{
         background: linear-gradient(180deg, rgba(17,24,39,0.95), rgba(15,23,42,0.95));
@@ -817,6 +788,15 @@ st.markdown(
         box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }}
 
+    .topbar-settings-card {{
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 14px;
+        background: rgba(15, 23, 42, 0.96);
+        border: 1px solid rgba(212,175,55,0.22);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }}
+
     /* ---------- Micro interactions ---------- */
     button {{
         transition: all 0.15s ease;
@@ -835,44 +815,48 @@ st.markdown(
 # Top bar
 # ----------------------------
 
-topbar_left, topbar_right = st.columns([20, 1], vertical_alignment="top")
+st.image("banner.png", use_container_width=True)
 
-with topbar_left:
-    st.image("banner.png", use_container_width=True)
+under_left, under_right = st.columns([8.5, 1.5], vertical_alignment="top")
 
-with topbar_right:
-    render_topbar_menu_button()
+with under_left:
+    st.markdown(
+        '<div class="hero-undertext">“Leonardo AI” transforms Renaissance imagination into modern engineering intelligence — bridging art, science, and innovation into real-world products.</div>',
+        unsafe_allow_html=True
+    )
 
-if st.session_state["show_topbar_menu"]:
-    with st.container():
-        menu_col1, menu_col2, menu_col3 = st.columns([6, 2, 1])
+with under_right:
+    st.markdown("<div style='margin-top:12px'></div>", unsafe_allow_html=True)
 
-        with menu_col2:
-            selected_language = st.selectbox(
-                "Language",
-                ["English", "Русский", "Svenska"],
-                index=["English", "Русский", "Svenska"].index(
-                    st.session_state.get("selected_language", "English")
-                ),
-                key="selected_language_menu"
-            )
+    if st.button("⋮", key="topbar_menu_toggle", help="Interface settings", use_container_width=True):
+        st.session_state["show_topbar_menu"] = not st.session_state.get("show_topbar_menu", False)
 
-            theme_mode = st.selectbox(
-                "Theme style",
-                ["Leonardo Dark", "Midnight Blue", "Warm Sepia"],
-                index=["Leonardo Dark", "Midnight Blue", "Warm Sepia"].index(
-                    st.session_state.get("theme_mode", "Leonardo Dark")
-                ),
-                key="theme_mode_menu"
-            )
+    if st.session_state.get("show_topbar_menu", False):
+        st.markdown('<div class="topbar-settings-card">', unsafe_allow_html=True)
 
-            st.session_state["selected_language"] = selected_language
-            st.session_state["theme_mode"] = theme_mode
+        selected_language = st.selectbox(
+            "Language",
+            ["English", "Русский"],
+            index=["English", "Русский"].index(
+                st.session_state.get("selected_language", "English")
+            ),
+            key="selected_language_under_banner"
+        )
 
-        with menu_col3:
-            if st.button("✕", key="close_topbar_menu", help="Close menu"):
-                st.session_state["show_topbar_menu"] = False
-                st.rerun()
+        theme_mode = st.selectbox(
+            "Theme style",
+            ["Leonardo Dark", "Midnight Blue", "Warm Sepia"],
+            index=["Leonardo Dark", "Midnight Blue", "Warm Sepia"].index(
+                st.session_state.get("theme_mode", "Leonardo Dark")
+            ),
+            key="theme_mode_under_banner"
+        )
+
+        st.session_state["selected_language"] = selected_language
+        st.session_state["theme_mode"] = theme_mode
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
 
 
 # ----------------------------
@@ -1220,17 +1204,6 @@ with left:
     render_profile_card()
         
 with right:
-    st.markdown(
-        """<div class="section-card">
-    <div class="section-title">About the System</div>
-    <div class="section-text">
-        Leonardo AI generates invention concepts inspired by Renaissance engineering and
-        translates them into modern product ideas with practical commercial potential.
-    </div>
-    </div>""",
-        unsafe_allow_html=True
-    )
-
     render_system_status()
 
     concept_data = generate_or_load_concept(

@@ -8,7 +8,12 @@ Leonardo AI is a creative engineering platform that combines the imagination of 
 
 ## 🚀 Demo
 
-> (Coming soon — Streamlit deployment)
+## 🚀 Demo
+
+Local demo available via Streamlit:
+
+```bash
+streamlit run app.py
 
 ---
 

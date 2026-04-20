@@ -113,41 +113,6 @@ def render_complete_guide(stage_name, guide):
             st.write("•", item)
 
 
-def render_profile_card():
-    concepts = get_concepts()
-    total_concepts = len(concepts)
-    favorite_concepts = sum(1 for item in concepts if item[4])
-
-    current_concept_id = st.session_state.get("current_concept_id")
-    saved_images = get_images_for_concept(current_concept_id) if current_concept_id else []
-    total_images = len(saved_images)
-
-    st.markdown(
-        f"""<div class="profile-card">
-<div class="profile-top">
-    <div class="profile-avatar">🧠</div>
-    <div class="profile-role-badge">Creator / Student</div>
-</div>
-<div class="profile-name">Aleksei</div>
-<div class="profile-stats-grid">
-    <div class="profile-stat-box">
-        <div class="profile-stat-label">Saved Concepts</div>
-        <div class="profile-stat-value">{total_concepts}</div>
-    </div>
-    <div class="profile-stat-box">
-        <div class="profile-stat-label">Favorites</div>
-        <div class="profile-stat-value">{favorite_concepts}</div>
-    </div>
-    <div class="profile-stat-box">
-        <div class="profile-stat-label">Saved Images</div>
-        <div class="profile-stat-value">{total_images}</div>
-    </div>
-</div>
-</div>""",
-        unsafe_allow_html=True
-    )
-
-
 def render_controls():
     with st.sidebar:
         st.markdown('<div class="sidebar-title">Leonardo Control</div>', unsafe_allow_html=True)
@@ -591,86 +556,7 @@ st.markdown(
     }}
 
     /* ---------- Profile card ---------- */
-    .profile-card {{
-        background: linear-gradient(180deg, rgba(17,24,39,0.95), rgba(15,23,42,0.95));
-        border: 1px solid rgba(212, 175, 55, 0.22);
-        border-radius: 22px;
-        padding: 22px;
-        margin-bottom: 16px;
-        color: white;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    }}
-
-    .profile-top {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 18px;
-        gap: 12px;
-    }}
-
-    .profile-avatar {{
-        width: 54px;
-        height: 54px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        background: linear-gradient(135deg, rgba(212,175,55,0.22), rgba(59,130,246,0.18));
-        border: 1px solid rgba(212,175,55,0.25);
-        flex-shrink: 0;
-    }}
-
-    .profile-role-badge {{
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 13px;
-        color: #f8e7c2;
-        border: 1px solid rgba(212,175,55,0.2);
-        background: rgba(212,175,55,0.08);
-        white-space: nowrap;
-    }}
-
-    .profile-name {{
-        font-size: 24px;
-        font-weight: 700;
-        margin: 0 0 8px 0;
-        color: #f9fafb;
-    }}
-
-    .profile-meta {{
-        color: #cbd5e1;
-        font-size: 14px;
-        line-height: 1.6;
-        margin-bottom: 18px;
-    }}
-
-    .profile-stats-grid {{
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }}
-
-    .profile-stat-box {{
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(148,163,184,0.18);
-        border-radius: 14px;
-        padding: 12px 14px;
-    }}
-
-    .profile-stat-label {{
-        font-size: 12px;
-        color: #94a3b8;
-        margin-bottom: 6px;
-    }}
-
-    .profile-stat-value {{
-        font-size: 26px;
-        font-weight: 700;
-        color: #f8fafc;
-        line-height: 1.1;
-    }}
+    
 
     /* ---------- Content cards ---------- */
     .section-card {{
@@ -776,7 +662,16 @@ st.markdown(
 
     div[data-testid="stButton"] > button[kind="secondary"],
     div[data-testid="stButton"] > button[kind="primary"] {{
-        border-radius: 12px !important;
+        border-radius: 14px !important;
+    }}
+
+    div[data-testid="stButton"] > button {{
+        min-height: 54px;
+    }}
+
+    .top-menu-btn-wrap {{
+        margin-top: 12px;
+        margin-bottom: 18px;
     }}
 
     .topbar-menu-panel {{
@@ -797,6 +692,43 @@ st.markdown(
         box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }}
 
+    .top-user-panel {{
+        margin-top: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 2px;
+    }}
+
+    .top-user-avatar {{
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(59,130,246,0.16));
+        border: 1px solid rgba(212,175,55,0.20);
+        margin-bottom: 14px;
+    }}
+
+    .top-user-name {{
+        font-size: 24px;
+        font-weight: 700;
+        color: #f8fafc;
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }}
+
+    .top-user-email {{
+        font-size: 15px;
+        color: #94a3b8;
+        line-height: 1.5;
+        max-width: 220px;
+        word-break: break-word;
+    }}
+
     /* ---------- Micro interactions ---------- */
     button {{
         transition: all 0.15s ease;
@@ -815,21 +747,23 @@ st.markdown(
 # Top bar
 # ----------------------------
 
-st.image("banner.png", use_container_width=True)
+top_left, top_right = st.columns([4.7, 1.9], vertical_alignment="top")
 
-under_left, under_right = st.columns([8.5, 1.5], vertical_alignment="top")
+with top_left:
+    st.image("banner.png", width="stretch")
 
-with under_left:
     st.markdown(
         '<div class="hero-undertext">“Leonardo AI” transforms Renaissance imagination into modern engineering intelligence — bridging art, science, and innovation into real-world products.</div>',
         unsafe_allow_html=True
     )
 
-with under_right:
-    st.markdown("<div style='margin-top:12px'></div>", unsafe_allow_html=True)
+with top_right:
+    st.markdown("<div style='margin-top:18px'></div>", unsafe_allow_html=True)
 
+    st.markdown('<div class="top-menu-btn-wrap">', unsafe_allow_html=True)
     if st.button("⋮", key="topbar_menu_toggle", help="Interface settings", use_container_width=True):
         st.session_state["show_topbar_menu"] = not st.session_state.get("show_topbar_menu", False)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if st.session_state.get("show_topbar_menu", False):
         st.markdown('<div class="topbar-settings-card">', unsafe_allow_html=True)
@@ -856,6 +790,17 @@ with under_right:
         st.session_state["theme_mode"] = theme_mode
 
         st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div class="top-user-panel">
+            <div class="top-user-avatar">🧠</div>
+            <div class="top-user-name">Aleksei</div>
+            <div class="top-user-email">luenko101985@gmail.com</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 
@@ -1198,26 +1143,20 @@ def render_previous_concepts():
 
 category, creativity_mode, audience, user_prompt, generate, regenerate = render_controls()
 
-left, right = st.columns([1.05, 2.35], vertical_alignment="top")
+render_system_status()
 
-with left:
-    render_profile_card()
-        
-with right:
-    render_system_status()
+concept_data = generate_or_load_concept(
+    category,
+    creativity_mode,
+    audience,
+    user_prompt,
+    generate,
+    regenerate,
+)
 
-    concept_data = generate_or_load_concept(
-        category,
-        creativity_mode,
-        audience,
-        user_prompt,
-        generate,
-        regenerate,
-    )
+if concept_data:
+    render_concept_result(concept_data)
 
-    if concept_data:
-        render_concept_result(concept_data)
-
-    render_previous_concepts()
+render_previous_concepts()
 
 

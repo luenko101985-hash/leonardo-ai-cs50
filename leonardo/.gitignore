@@ -9,3 +9,4 @@ leonardo.db
 .vscode/
 *.db
 .env
+.DS_Store

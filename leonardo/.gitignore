@@ -1,12 +1,17 @@
-.vscode/
+# System
+.DS_Store
+
+# Python
 __pycache__/
 *.pyc
-.env
-.DS_Store
-*.pyc
 .pytest_cache/
-leonardo.db
-.vscode/
-*.db
+
+# Environment
 .env
-.DS_Store
+venv/
+
+# IDE
+.vscode/
+
+# Database
+*.db

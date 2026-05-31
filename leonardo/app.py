@@ -959,6 +959,50 @@ section[data-testid="stSidebar"] .language-row {
     font-size: 12px !important;
 }
 
+.idea-block-leonardo {
+    padding: 22px;
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            rgba(247,238,215,0.94),
+            rgba(234,223,196,0.94)
+        ),
+        url("https://www.transparenttextures.com/patterns/old-paper.png");
+
+    border: 1px solid rgba(120,90,40,0.25);
+
+    margin-bottom: 22px;
+
+    color:#2b2418;
+
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,0.05),
+        0 8px 24px rgba(0,0,0,0.12);
+}
+
+.idea-block-modern {
+
+    padding:22px;
+
+    border-radius:18px;
+
+    background:
+
+        linear-gradient(
+            rgba(7,17,31,0.95),
+            rgba(8,22,38,0.95)
+        );
+
+    border:1px solid rgba(59,130,246,0.25);
+
+    margin-bottom:22px;
+
+    box-shadow:
+        inset 0 0 40px rgba(59,130,246,0.08),
+        0 8px 24px rgba(0,0,0,0.25);
+}
+
 </style>
 """,
     unsafe_allow_html=True,
@@ -1091,7 +1135,7 @@ def render_controls():
         st.markdown('<div class="sidebar-group-title">⚙️ Concept Settings</div>', unsafe_allow_html=True)
 
         category = st.selectbox(
-            "Invention Category",
+            "Idea Category",
             CATEGORIES,
             format_func=pretty_label,
         )
@@ -1112,7 +1156,7 @@ def render_controls():
             height=120,
         )
 
-        generate = st.button("✨ Generate Concept", use_container_width=True, type="primary")
+        generate = st.button("✨ Generate Idea", use_container_width=True, type="primary")
         regenerate = st.button("🔄 Regenerate", use_container_width=True)
 
         render_voice_prompt()
@@ -1120,7 +1164,7 @@ def render_controls():
         with st.expander("📦 Included in Output", expanded=False):
             st.markdown(
                 """
-                - ✅ Leonardo-style invention idea
+                - ✅ Leonardo-style idea concept
                 - ✅ Principle of operation
                 - ✅ Leonardo sketch description
                 - ✅ Modern implementation
@@ -1197,20 +1241,20 @@ def render_empty_concept_area():
         st.markdown(
             """
 <div class="concept-empty">
-    <p>Your invention concept will appear here.</p>
-    <p>Leonardo AI will generate a complete Renaissance-inspired invention with modern engineering analysis.</p>
+    <p>Your idea concept will appear here.</p>
+    <p>Leonardo AI will generate a complete idea with Renaissance-inspired vision and modern implementation analysis.</p>
 </div>
 """,
             unsafe_allow_html=True,
         )
 
     feature_cards = [
-        ("🪶", "Title & Summary", "The name and brief overview of the invention."),
+        ("🪶", "Title & Summary", "The name and brief overview of the idea."),
         ("⚙️", "Core Principle", "The fundamental principle behind how it works."),
         ("🖼️", "Leonardo Sketch", "A description of how Leonardo might have sketched it."),
         ("📦", "Blueprint Concept", "A modern engineering blueprint and structural concept."),
         ("⚗️", "Materials & Resources", "What materials are needed and how they are used."),
-        ("🎯", "Use Cases", "Where and how this invention can be applied."),
+        ("🎯", "Use Cases", "Where and how this idea can be applied."),
     ]
 
     for row_start in range(0, len(feature_cards), 3):
@@ -1244,23 +1288,38 @@ def render_empty_concept_area():
         unsafe_allow_html=True,
     )
 
-def generate_or_load_concept(category, creativity_mode, audience, user_prompt, generate, regenerate):
-    concept_data = st.session_state.get("loaded_concept")
+def generate_or_load_concept(
+    category,
+    creativity_mode,
+    audience,
+    user_prompt,
+    generate,
+    regenerate,
+):
+
+    concept_data = st.session_state.get("generated_concept")
 
     if generate or regenerate:
+
         st.session_state["leonardo_visual_asset"] = None
         st.session_state["blueprint_visual_asset"] = None
-        st.session_state["loaded_concept"] = None
 
-        prompt_text = user_prompt.strip() if user_prompt.strip() else f"Create an invention in {pretty_label(category)}"
+        prompt_text = (
+            user_prompt.strip()
+            if user_prompt.strip()
+            else f"Create an idea in {pretty_label(category)}"
+        )
 
         with st.spinner("Generating concept..."):
+
             concept_data = generate_concept(
                 category=category,
                 creativity_mode=creativity_mode,
                 audience=audience,
                 user_prompt=prompt_text,
             )
+
+        st.session_state["generated_concept"] = concept_data
 
         concept_id = save_concept(
             title=concept_data["title"],
@@ -1486,28 +1545,54 @@ def render_concept_result(concept_data):
 
     st.success("Concept generated successfully.")
 
-    st.markdown("## Leonardo Inspiration")
-    render_result_box("Concept", concept_data["leonardo_concept"])
-    render_result_box("Sketch Description", concept_data["leonardo_sketch_description"])
+    with st.container(border=True):
+        st.markdown("## 🪶 Leonardo Vision")
+        st.caption("Renaissance-inspired interpretation of the idea")
 
-    st.markdown("## Modern Product Definition")
-    render_result_box("Title", title)
-    render_result_box("Product Name", concept_data["modern_product_name"])
-    render_result_box("Category", concept_data["modern_category"])
-    render_result_box("Executive Summary", concept_data["executive_summary"])
+        img_cols = st.columns(3)
+        with img_cols[0]:
+            st.info("Leonardo scene image 1")
+        with img_cols[1]:
+            st.info("Leonardo scene image 2")
+        with img_cols[2]:
+            st.info("Leonardo scene image 3")
 
-    st.markdown("## Business Need")
-    render_result_box("Problem Statement", concept_data["problem_statement"])
-    render_result_box("Target Users", concept_data["target_users"])
-    render_result_box("Industries", concept_data["industries"])
-    render_result_box("Use Cases", concept_data["use_cases"])
+        render_result_box("Concept", concept_data["leonardo_concept"])
+        render_result_box("Sketch Description", concept_data["leonardo_sketch_description"])
 
-    st.markdown("## Engineering")
-    render_result_box("Modern Principle", concept_data["modern_principle"])
-    render_result_box("System Components", concept_data["system_components"])
-    render_result_box("Materials", concept_data["materials"])
-    render_result_box("Technical Requirements", concept_data["technical_requirements"])
-    render_result_box("Modern Sketch Description", concept_data["modern_sketch_description"])
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    with st.container(border=True):
+        st.markdown("## ⚡ Modern Implementation")
+        st.caption("Modern product, business and engineering interpretation")
+
+        img_cols = st.columns(3)
+        with img_cols[0]:
+            st.info("Modern use-case image 1")
+        with img_cols[1]:
+            st.info("Modern use-case image 2")
+        with img_cols[2]:
+            st.info("Modern use-case image 3")
+
+        render_result_box("Title", title)
+        render_result_box("Product Name", concept_data["modern_product_name"])
+        render_result_box("Category", concept_data["modern_category"])
+        render_result_box("Executive Summary", concept_data["executive_summary"])
+
+        st.markdown("## Business Need")
+        render_result_box("Problem Statement", concept_data["problem_statement"])
+        render_result_box("Target Users", concept_data["target_users"])
+        render_result_box("Industries", concept_data["industries"])
+        render_result_box("Use Cases", concept_data["use_cases"])
+
+        st.markdown("## Engineering")
+        render_result_box("Modern Principle", concept_data["modern_principle"])
+        render_result_box("System Components", concept_data["system_components"])
+        render_result_box("Materials", concept_data["materials"])
+        render_result_box("Technical Requirements", concept_data["technical_requirements"])
+        render_result_box("Modern Sketch Description", concept_data["modern_sketch_description"])        
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("## Visual Generation")
     render_result_box("Leonardo Sketch Prompt", concept_data["leonardo_sketch_description"])

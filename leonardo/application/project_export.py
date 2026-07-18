@@ -1,0 +1,10 @@
+from application.images import list_concept_images
+from pdf_export import export_project_plan_pdf
+
+
+def export_project_package(
+    concept_data,
+    concept_id,
+) -> bytes:
+    saved_images = list_concept_images(concept_id) if concept_id else []
+    return export_project_plan_pdf(concept_data, saved_images=saved_images)

@@ -179,9 +179,7 @@ def _draw_cover_page(c, concept_data, saved_images=None):
     c.showPage()
 
 
-def export_project_plan_pdf(concept_data, output_path, saved_images=None):
-    c = canvas.Canvas(output_path, pagesize=A4)
-
+def _write_project_plan_pdf(c, concept_data, saved_images=None):
     _draw_cover_page(c, concept_data, saved_images=saved_images)
 
     y = PAGE_HEIGHT - TOP
@@ -249,3 +247,13 @@ def export_project_plan_pdf(concept_data, output_path, saved_images=None):
     y = _draw_label_value(c, "Development Time", concept_data.get("dev_time", ""), y)
 
     c.save()
+
+
+def export_project_plan_pdf(concept_data, saved_images=None) -> bytes:
+    buffer = BytesIO()
+    try:
+        c = canvas.Canvas(buffer, pagesize=A4)
+        _write_project_plan_pdf(c, concept_data, saved_images=saved_images)
+        return buffer.getvalue()
+    finally:
+        buffer.close()

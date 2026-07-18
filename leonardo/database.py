@@ -1,12 +1,15 @@
 import sqlite3
 import json
+from pathlib import Path
 
 
-DB_NAME = "leonardo.db"
+DB_PATH = Path(__file__).resolve().parent / "leonardo.db"
 
 
 def get_connection():
-    return sqlite3.connect(DB_NAME)
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA foreign_keys = ON")
+    return conn
 
 
 def init_db():
